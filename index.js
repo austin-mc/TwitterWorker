@@ -1,10 +1,12 @@
 //Used for twitter api auth
-import * as crypto from 'crypto';
+import { HmacSHA1, enc } from 'crypto-js';
 import OAuth from 'oauth-1.0a';
+
 
 addEventListener('scheduled', event => {
   event.waitUntil(triggerPost(event));
 });
+
 
 const token = {
 	key: TWITTER_ACCESS_TOKEN,
@@ -18,28 +20,31 @@ const oauth = new OAuth({
 	hash_function: hash_function_sha1,
 });
 
-
-// Following OAuth-1.0a docs for this
-function hash_function_sha1(base_string, key) {
-	return crypto
-		.createHmac('sha1', key)
-		.update(base_string)
-		.digest('base64')
+function hash_function_sha1(baseString, key) {
+	return HmacSHA1(baseString, key).toString(enc.Base64)
 }
 
 async function triggerPost(event) {
 	
-	var requestData = {
-		method: 'POST',
-		headers: oauth.toHeader(oauth.authorize(request, token)),
-		data: { status : "Sent from Cloudflare Workers"}
-	};
-	
-	const response = await fetch("https://api.twitter.com/2/tweets", {
-		method: requestData.method,
-		headers: oauth.toHeader(oauth.authorize(requestData, token)),
-		form: requestData.data,
-	});
-	
-	console.log(await response.json());
+  // Will be added to request headers
+  const reqAuth = {
+    url: "https://api.twitter.com/2/tweets",
+    method: 'POST',
+  };
+  
+  var reqBody = JSON.stringify({
+    "text": "Sent from Cloudflare Workers"
+  });
+  
+  
+  const response = await fetch(reqAuth.url, {
+    method: reqAuth.method,
+    headers: {
+      ...oauth.toHeader(oauth.authorize(reqAuth, token)),
+      'Content-Type': 'application/json',
+    },
+    body: reqBody
+  });
+  
+	return new Response(await response.json());
 }

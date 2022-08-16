@@ -1,4 +1,4 @@
-name = "helloworld"
+name = "twitterworker"
 node_compat = true
 main = "index.js"
 compatibility_date = "2022-08-16"
