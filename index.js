@@ -8,36 +8,37 @@ addEventListener('scheduled', event => {
 });
 
 
+// From OAuth-1.0a docs
+const oauth = new OAuth({
+	consumer: { key: TWITTER_API_KEY, secret: TWITTER_API_SECRET },
+	signature_method: 'HMAC-SHA1',
+	hash_function: hashSha1,
+});
+
+// Hash function for OAuth using Crypto-JS HMAC-SHA1
+function hashSha1(baseString, key) {
+	return HmacSHA1(baseString, key).toString(enc.Base64)
+}
+
+// Will be added to request headers
 const token = {
 	key: TWITTER_ACCESS_TOKEN,
 	secret: TWITTER_ACCESS_SECRET,
 };
 
-// From OAuth-1.0a docs
-const oauth = new OAuth({
-	consumer: { key: TWITTER_API_KEY, secret: TWITTER_API_SECRET },
-	signature_method: 'HMAC-SHA1',
-	hash_function: hash_function_sha1,
-});
+// Will be added to request headers
+const reqAuth = {
+  url: "https://api.twitter.com/2/tweets",
+  method: 'POST',
+};
 
-function hash_function_sha1(baseString, key) {
-	return HmacSHA1(baseString, key).toString(enc.Base64)
-}
 
+// Triggered by Cloudflare Worker Crons to post a tweet
 async function triggerPost(event) {
-	
-  console.log("here")
-  
-  // Will be added to request headers
-  const reqAuth = {
-    url: "https://api.twitter.com/2/tweets",
-    method: 'POST',
-  };
   
   var reqBody = JSON.stringify({
     "text": "Sent from Cloudflare Workers"
   });
-  
   
   const response = await fetch(reqAuth.url, {
     method: reqAuth.method,
