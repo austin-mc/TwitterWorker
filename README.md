@@ -1,6 +1,6 @@
 # TwitterWorker
 
-Posts a tweet once a day through the Twitter API using a Cron Trigger on Cloudflare Workers.
+Posts a tweet once a day through the Twitter API v2 using a Cron Trigger on Cloudflare Workers.
 
 ## Installation
 
