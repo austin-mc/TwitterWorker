@@ -13,7 +13,7 @@ const token = {
 	secret: TWITTER_ACCESS_SECRET,
 };
 
-// Following OAuth-1.0a docs for this
+// From OAuth-1.0a docs
 const oauth = new OAuth({
 	consumer: { key: TWITTER_API_KEY, secret: TWITTER_API_SECRET },
 	signature_method: 'HMAC-SHA1',
@@ -26,6 +26,8 @@ function hash_function_sha1(baseString, key) {
 
 async function triggerPost(event) {
 	
+  console.log("here")
+  
   // Will be added to request headers
   const reqAuth = {
     url: "https://api.twitter.com/2/tweets",

@@ -7,7 +7,7 @@ account_id = "e4e117e43dcd195f5ab2207218d22932"
 workers_dev = true
 
 [triggers]
-crons = [ "14 22 * * *" ]
+crons = [ "0 0 * * *" ]
 
 
 

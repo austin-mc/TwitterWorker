@@ -12,6 +12,10 @@ Check out the Cloudflare Workers [getting started guide](https://developers.clou
 
 `wrangler init <worker name>`
 
+`npm install oauth-1.0a`
+
+`npm install crypto-js`
+
 
 ## Local development
 
