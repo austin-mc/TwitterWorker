@@ -5,9 +5,12 @@ compatibility_date = "2022-08-16"
 
 account_id = "e4e117e43dcd195f5ab2207218d22932"
 
+kv_namespaces = [
+    { binding = "TWITTER_WORKER", id = "84c45378388346e19040e0e1a404cc27" }
+]
+
 [triggers]
 crons = [ "0 0 * * *" ]
-
 
 
 # wrangler secrets:

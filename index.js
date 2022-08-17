@@ -37,7 +37,7 @@ const reqAuth = {
 async function triggerPost(event) {
   
   var reqBody = JSON.stringify({
-    "text": "Sent from Cloudflare Workers"
+    "text": await TWITTER_WORKER.get("TWEET_CONTENT")
   });
   
   const response = await fetch(reqAuth.url, {

@@ -1,6 +1,6 @@
 # TwitterWorker
 
-Posts a tweet on a user specified schedule through Twitter API v2 using a Cron Trigger on Cloudflare Workers.
+Posts a tweet on a user specified schedule through Twitter API v2 using a Cron Trigger on Cloudflare Workers. Tweet content is stored using Cloudflare Workers KV.
 
 ## Installation
 
